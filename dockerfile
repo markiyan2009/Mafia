@@ -26,4 +26,4 @@ RUN mkdir -p /app/staticfiles
 EXPOSE 8000
 
 # Команда запуску (важливо: слухає PORT від Render)
-CMD sh -c "gunicorn Mafia_sys.wsgi:application --bind 0.0.0.0:${PORT:-8000}"
+CMD gunicorn Mafia_sys.wsgi:application --bind 0.0.0.0:$PORT --workers 4
