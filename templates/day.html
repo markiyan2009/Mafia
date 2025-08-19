@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+Мафія заєбашила: <b>{{mafia_choose}}</b>
+<br>
+Кіллер заєбашив: <b>{{killer_choose}}</b>
+<br>
+Лікар полікував: <b>{{doctor_choose}}</b>
+<br>
+Шлюха єбалась з: <b>{{whore_choose}}</b>
+<br>
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">НАХУЙ ПІШОВ</button>
+</form>
+Здохли:
+<br>
+{% for gamer in dead %}
+
+{{gamer.name}}
+<br>
+{% endfor %}
+
+{% endblock %}

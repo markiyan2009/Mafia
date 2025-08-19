@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <div id="forms-container">
+        {% for form in formset %}
+            <div class="form-item">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Empty form (шаблон для JS) -->
+    <div id="empty-form" style="display:none;">
+        {{ formset.empty_form.as_p }}
+    </div>
+
+    <button type="button" id="add-form">Додати форму</button>
+    <button type="submit">Зберегти</button>
+</form>
+
+<script>
+    const addButton = document.getElementById("add-form");
+    const formsContainer = document.getElementById("forms-container");
+    const totalForms = document.getElementById("id_form-TOTAL_FORMS");
+    const emptyForm = document.getElementById("empty-form").innerHTML;
+
+    addButton.addEventListener("click", () => {
+        let formCount = parseInt(totalForms.value);
+        let newForm = emptyForm.replace(/__prefix__/g, formCount);
+        formsContainer.insertAdjacentHTML("beforeend", newForm);
+        totalForms.value = formCount + 1;
+    });
+</script>
+
+{% endblock %}

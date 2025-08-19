@@ -1,0 +1,52 @@
+{% extends 'base.html' %}   
+
+{% block content %}
+    {{request.session.time}}
+    Прокидається {{ role }} <br>
+
+    <form id="sherif-form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" name="action" value="choose">Вибрати</button>
+
+        {% if request.session.pk_role == 5 %}
+            <button type="submit" name="action" value="check">Перевірити</button>
+        {% endif %}
+    </form>
+
+    <p id="mafia-result">
+        {% if request.session.is_mafia %}
+            {{ request.session.is_mafia }}
+        {% endif %}
+    </p>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("sherif-form");
+
+        form.addEventListener("submit", async function(e) {
+            const action = e.submitter.value; // вибираємо яку кнопку натиснули
+            if (action === "check") {
+                e.preventDefault();  // щоб не було redirect
+
+                let formData = new FormData(form);
+                formData.append("action", action);
+
+                let response = await fetch("", {
+                    method: "POST",
+                    headers: {"X-Requested-With": "XMLHttpRequest"},
+                    body: formData
+                });
+
+                let data = await response.json();
+                document.getElementById("mafia-result").innerText = data.result;
+            }
+            else{
+                document.getElementById("mafia-result").innerText = '';
+            }
+        });
+    });
+    </script>
+
+{% endblock %}
