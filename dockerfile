@@ -22,4 +22,4 @@ COPY . /app/
 EXPOSE 8080
 
 # Command to run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:8080","Mafia_sys.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000","Mafia_sys.wsgi:application"]
