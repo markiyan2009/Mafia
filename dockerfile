@@ -19,4 +19,4 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 # Запускаємо через gunicorn
-CMD gunicorn Mafia.wsgi:application --bind 0.0.0.0:$PORT
+CMD gunicorn Mafia_sys.wsgi:application --bind 0.0.0.0:$PORT
